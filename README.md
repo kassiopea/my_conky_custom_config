@@ -17,7 +17,7 @@ Result
 
 1.  copy the repository in the home dirrectory:
 ```
-$ git clone link to repository
+$ git clone https://github.com/kassiopea/my_conky_custom_config.git
 ```
 2. install the app Conky:
 ```
@@ -34,4 +34,4 @@ Or you may add to autostart. You can add file "conky.desctop" in autostart folde
 ```
 $ cp conky.desctop ~/.config/autostart/
 ```
-And after restart system the app will be on the desctop 
+And after restart system the app will be on the desctop
