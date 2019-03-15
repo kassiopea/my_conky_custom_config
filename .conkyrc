@@ -1,0 +1,131 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--enable-nvidia
+--[[
+Conky, a system monitor, based on torsmo
+
+Any original torsmo code is licensed under the BSD license
+
+All code written since the fork of torsmo is licensed under the GPL
+
+Please see COPYING for details
+
+Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+Copyright (c) 2005-2012 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+]]
+
+conky.config = {
+    double_buffer = true,
+    no_buffers = true,
+    update_interval = 1.0,
+
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'desktop',
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    
+
+    background = false,
+
+    alignment = 'top_right',
+    gap_x = 8,
+    gap_y = 34,
+    minimum_height = 1050,
+    minimum_width = 370,
+    border_width = 1,
+
+    draw_borders = false,
+    draw_graph_borders = false,
+    draw_outline = false,
+    draw_shades = false,
+    stippled_borders = 5,
+
+
+    cpu_avg_samples = 2,
+    net_avg_samples = 2,
+
+
+    default_color = 'red',
+    color1 ='#C0C0C0',
+    color2 = '#FFF8E7',
+    color3 = '#434750',
+    color4 = '#00FF7F',
+    color5 = '#00BFFF',
+    default_outline_color = 'white',
+    default_shade_color = 'white',
+
+    use_xft = true,
+    font = 'DejaVu Sans Mono:size=11',
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+    
+    uppercase = false,
+    use_spacer = 'none',
+    show_graph_scale = false,
+    show_graph_range = false,
+
+
+    lua_load = 'conky_draw.lua',
+    lua_draw_hook_pre = 'main'
+}
+
+conky.text = [[
+${color1}
+#name system
+${alignc}${nodename}${color2}
+#time
+${alignc}${font Ubuntu:style=Medium:pixelsize=50}${time %H:%M}${font Roboto Mono:size=8}
+${voffset 10}${color1}
+${offset 10}CPU: ${exec cat /proc/cpuinfo | grep 'model name' | uniq | cut -c 13-100}
+${offset 10}GPU: ${exec nvidia-smi -a | grep 'Product Name'| cut -c 39-100}${font}
+${color2}
+#local ip with icon
+${offset 10}${addrs enp4s0} ${alignr}${image ~/Conky/icon_location.png -p 350,160 -s 18x18}
+${color3}$hr
+#public ip and icon
+${voffset -3}${offset 10}${color2}${exec curl ipinfo.io/ip} ${alignr}${image ~/Conky/icon_world.png -p 350,192 -s 18x18}
+#download and upload with icons
+${downspeedgraph enp4s0 20,100 FFFF00 DD3A21} ${goto 260}${upspeedgraph enp4s0 20,100 06E9F8 2104FA}
+${image ~/Conky/icon_download.png -p 0,247 -s 18x18}${goto 28}Download ${downspeedf enp4s0}k/s${image ~/Conky/icon_upload.png -p 236,247 -s 18x18}${alignr}Upload ${upspeedf enp4s0}k/s
+$color3$hr$color2
+#temperature CPU and GPU
+${image ~/Conky/fire.png -p 0,284 -s 20x20}
+${voffset -14}${offset 24}Temperature${alignc}CPU${offset 40}GPU
+${alignc}${offset 10}$color4${hwmon 1 temp 1}°C${offset 30}${nvidia temp}°C 
+#icon memory temperature
+${image ~/Conky/icon_ram.png -p 170,416 -s 24x24 -f 68400}
+${voffset 126}${goto 168}$color4$mem/$memmax
+#icon CPU RAM
+${image ~/Conky/icon_cpu.png -p 68,420 -s 18x18}
+#icon GPU RAM
+${image ~/Conky/graphics-card.png -p 96,540 -s 18x18}
+${voffset 120}$color2
+#file sistems 
+${offset 6}File systems:$color1${voffset 10}
+${offset 18}/ $color4${offset 26}${fs_used /}/$color5${fs_size /}${offset 116}${fs_free_perc /}% free
+${voffset -4}$color2
+${offset 18}home $color4${fs_used /home}/$color5${fs_size /home}${offset 106}${fs_free_perc /home}% free$color2
+${voffset 10}
+$color3$hr
+${offset 4}${color2}Name              PID    CPU%   MEM% ${color1}
+${offset 4}${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${offset 4}${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${offset 4}${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${offset 4}${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+${offset 4}${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
+${offset 4}${top name 6} ${top pid 6} ${top cpu 6} ${top mem 6}
+]]
