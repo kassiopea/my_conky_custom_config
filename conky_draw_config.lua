@@ -71,7 +71,7 @@ elements = {
     font_size = '16'
  },{
     kind = 'static_text',
-    from = {x = 148, y = 578},
+    from = {x = 150, y = 578},
     text = '%',
     font_size = '12',
  },{
@@ -94,7 +94,7 @@ elements = {
     font_size = '16'
  },{
     kind = 'static_text',
-    from = {x = 104, y = 458},
+    from = {x = 108, y = 458},
     text = '%',
     font_size = '12'
  },{
@@ -102,8 +102,9 @@ elements = {
     conky_value = 'nvidia membwutil',
     from = {x = 214, y = 700},
     to = {x = 300, y = 700},
-    background_color = '0x00BFFF',
-    bar_color = '0x003242',
+    background_color = '0x213236',
+    background_alpha = 0.4,
+    bar_color = '0x00BEFF',
     background_thickness = 16,
     bar_thickness = 12,
 },{
@@ -111,8 +112,9 @@ elements = {
     conky_value = 'nvidia membwutil',
     from = {x = 214, y = 732},
     to = {x = 300, y = 732},
-    background_color = '0x00BFFF',
-    bar_color = '0x003242',
+    background_color = '0x213236',
+    background_alpha = 0.4,
+    bar_color = '0x00BEFF',
     background_thickness = 16,
     bar_thickness = 12,
  },
